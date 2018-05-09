@@ -1,0 +1,12 @@
+<ul class='menuList' *ngIf="isLoaded">
+  <!-- <li *ngFor="let item of navList">{{item.title}}</li> -->
+  <li *ngFor="let item of navList"  ><span [routerLink]="item.href" class='menuTitle'>{{item.title}}</span>
+       <span class='menuActive' [class.active]="item.href === selectedUrl"></span>
+      <ul *ngIf='item.showSubAble'>
+          <li *ngFor='let child of item.childData' [routerLink]="child.href" [class.active]="child.href === selectedUrl">
+              {{child.title}}
+              <span class='menuActive' [class.active]="child.href === selectedUrl"></span>
+          </li>
+      </ul>
+  </li>
+</ul>

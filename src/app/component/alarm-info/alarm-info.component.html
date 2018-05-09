@@ -1,0 +1,130 @@
+<form action="">
+  <fieldset>
+    <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <input type="text" matInput placeholder="告警源" name="alarmSource" [(ngModel)]="activeAlarm.alarmSource">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="告警类型" name="alarmType" [(ngModel)]="activeAlarm.alarmType">
+       <mat-option value="">不限</mat-option>
+       <mat-option  *ngFor="let type of activeAlarmTypeList" value={{type.dictName}}>{{type.dictName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="告警级别" name="alarmLevel" [(ngModel)]="activeAlarm.alarmLevel">
+        <mat-option>不限</mat-option>
+        <mat-option value="1">清除告警</mat-option>
+        <mat-option value="4">提示告警</mat-option>
+        <mat-option value="5">一般告警</mat-option>
+        <mat-option value="6">重要告警</mat-option>
+        <mat-option value="7">紧急告警</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="确认状态" name="ackFlag" [(ngModel)]="activeAlarm.ackFlag">
+        <mat-option>不限</mat-option>
+        <mat-option value="0">未确认</mat-option>
+        <mat-option value="1">已确认</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="清除状态" name="clearFlag" [(ngModel)]="activeAlarm.clearFlag">
+        <mat-option>不限</mat-option>
+        <mat-option value="0">未清除</mat-option>
+        <mat-option value="1">已清除</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker" [(ngModel)]="activeAlarm.startTime" name="startTime" placeholder="开始时间" [max]="pageInfo.searchData['endTime']" (click)="startPicker.open()" >
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="endPicker" [(ngModel)]="activeAlarm.endTime" name="endTime" placeholder="结束时间" [min]="pageInfo.searchData['startTime']" (click)="endPicker.open()">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="searchTablelist()">查询</button>
+    </div>
+  </fieldset>
+</form>
+
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">编号</div>
+      <div class="table-header-item">告警源</div>
+      <div class="table-header-item">类型</div>
+      <div class="table-header-item">级别</div>
+      <div class="table-header-item">发生时间</div>
+      <div class="table-header-item">次数</div>
+      <div class="table-header-item">工单编号</div>
+      <div class="table-header-item">确认状态</div>
+      <div class="table-header-item">清除状态</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <div class="table-body-item">
+        <input type="checkbox" (click)="onCheckboxItemChanged($event)" value='{{item.alarmId}},{{item.ackFlag}},{{item.clearFlag}},{{item.alarmSource}},{{item.orderNo}}'>
+      </div>
+      <div class="table-body-item">{{item.alarmId}}</div>
+      <div class="table-body-item">{{item.alarmSource}}</div>
+      <div class="table-body-item">{{item.alarmType}}</div>
+      <div class="table-body-item">
+        <span *ngIf="item.alarmLevel===null"></span>
+        <span class='warningInfo' *ngIf="item.alarmLevel===1">清除告警</span>
+        <span class='info' *ngIf="item.alarmLevel===4">提示告警</span>
+        <span class='successInfo' *ngIf="item.alarmLevel===5">一般告警</span>
+        <span class='warningInfo' *ngIf="item.alarmLevel===6">重要告警</span>
+        <span class='dangerInfo' *ngIf="item.alarmLevel===7">紧急告警</span>
+      </div>
+
+      <div class="table-body-item" matTooltip="{{item.lastEventTime| date:'yyyy-MM-dd HH:mm:ss'}}" matTooltipPosition="above">{{item.lastEventTime| date:'yyyy-MM-dd HH:mm:ss'}}</div>
+      <div class="table-body-item">{{item.alarmCount}}</div>
+     <div class="table-body-item"><a href="javascript:void(0);" (click)="workDetailInfo(item.orderNo,$event)" >{{item.orderNo}}</a></div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="ackFlagIndo(item.alarmId,$event)" *ngIf="hasPermission('alarm-info:confirm') && (item.ackFlag===0 || item.ackFlag===null)">确认告警</button>
+        <span class='successInfo' *ngIf="item.ackFlag===1">已确认</span>
+      </div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="clearFlagIndo(item.alarmId,$event)" *ngIf="hasPermission('alarm-info:clear') && (item.clearFlag===0 || item.clearFlag===null)">清除告警</button>
+        <span class='successInfo' *ngIf="item.clearFlag===1">已清除</span>
+      </div>
+      <div class="table-body-item">
+        <button mat-raised-button class='delete-btn' (click)="detailsIndo(item.alarmId,$event)" *ngIf="hasPermission('alarm-info:detail')"  >详细信息</button>
+        <button mat-raised-button class='add-btn' (click)="addOrderInfo(item,$event)" *ngIf="hasPermission('alrm-info:saveAlarmInfo') && item.orderNo===null">生成维修工单</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' *ngIf="hasPermission('alarm-info:confirmBatch')" (click)="allAckFlagIndo()" >批量确认告警</button>
+    <button mat-raised-button class='delete-btn' *ngIf="hasPermission('alarm-info:clearBatch')" (click)="allClearFlagIndo()" >批量清除告警</button>
+  </div>
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage+1}}</span>页</span>
+      <mat-chip (click)="goPage(0)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages-1)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

@@ -1,0 +1,76 @@
+@import '../../../../variables.scss';
+
+:host {
+  display: block;
+  //表格样式 and 搜索栏的样式
+  form {
+    min-width: 900px;
+  }
+
+  fieldset {
+    margin: 0;
+  }
+
+  .mat-form-field,
+  .search-div {
+    width: calc(24% - 15px);
+    margin-left: 15px;
+  }
+
+  .table-list .table-body-container .table-body-row,
+  .table-list .table-header-container .table-header-row {
+    display: flex;
+    flex-direction: row;
+    padding: 2px 0;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    // height: 35px;
+  }
+  // .table-list .table-body-container {
+  //    margin-right: -17px;
+  // }
+  .table-list .table-header-container .table-header-item {
+    // font-weight: bold;
+  }
+
+  .table-list .table-body-container {
+    // height: 480px;
+    overflow: auto;
+  }
+
+  .table-header-row {
+    height: 30px;
+    line-height: 30px;
+    background: -webkit-gradient(linear, 0% 10%, 0% 100%,from(#466A90), to(#BEC3C7));
+    color: $white;
+  }
+
+  .table-list .table-body-container .table-body-item:first-child,
+  .table-list .table-header-container .table-header-item:first-child,
+  .table-list .table-body-container .table-body-item:nth-child(2),
+  .table-list .table-header-container .table-header-item:nth-child(2){
+    flex: 0 1 160px;
+  }
+  .table-list .table-body-container .table-body-item:nth-child(3),
+  .table-list .table-header-container .table-header-item:nth-child(3){
+    flex: 0 1 360px;
+  }
+  .table-list .table-body-container .table-body-item:last-child,
+  .table-list .table-header-container .table-header-item:last-child{
+    flex: 0 1 200px;
+  }
+  .table-list .table-body-item span.dangerInfo,
+  .table-list .table-body-item span.info,
+  .table-list .table-body-item span.primaryInfo,
+  .table-list .table-body-item span.successInfo,
+  .table-list .table-body-item span.warningInfo {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    line-height: 25px;
+    color: $white;
+    border-radius: 5px;
+    padding: 0 2px;
+  }
+}

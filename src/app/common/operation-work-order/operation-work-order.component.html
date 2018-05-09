@@ -1,0 +1,69 @@
+<h1 mat-dialog-title *ngIf="operatData.operation=='-1'">工单删除</h1>
+<h1 mat-dialog-title *ngIf="operatData.operation=='3'">工单归档</h1>
+<h1 mat-dialog-title *ngIf="operatData.operation=='1'">编辑新装工单</h1>
+<h1 mat-dialog-title *ngIf="operatData.operation=='2'">编辑告警工单</h1>
+<mat-dialog-actions *ngIf="operatData.operation=='3'||operatData.operation=='-1'">
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单编号" [value]='operatData.orderNo' name='orderNo' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单类型" [value]='operatData.orderType|chinese:"type"' name='orderType' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单状态" [value]='operatData.orderStatus|chinese:"status"' name='orderStatus' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="设备编号" [value]='operatData.equipmentNo' name='equipmentNo' disabled>
+  </mat-form-field>
+  <mat-form-field *ngIf="operatData.alarmId">
+    <input type="text" matInput placeholder="关联告警ID" [value]='operatData.alarmId' name='alarmId' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单创建人" [value]='operatData.createUser' name='createUser' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="创建时间" [value]="operatData.createTime | date:'yyyy-MM-dd'" name='createTime' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="过期时间" [value]="operatData.expireTime | date:'yyyy-MM-dd'" name='expireTime' disabled>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="工单描述" [(ngModel)]='operatData.orderDescription'
+                matAutosizeMinRows='1' matAutosizeMaxRows='5' [disabled]="operatData.operation=='-1'">
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button [mat-dialog-close]="true" tabindex="-1" class="add-btn" (click)=OperationOk(operatData)>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="operatData.operation=='1'||operatData.operation=='2'">
+
+  <mat-form-field *ngIf="operatData.operation=='1'">
+    <input type="number" matInput placeholder="新装设备数量" [min]="0" [(ngModel)]="operatData.newEquipmentCount" required>
+  </mat-form-field>
+  <mat-form-field *ngIf="operatData.operation=='1'">
+    <input type="text" matInput placeholder="新装工单安装地址" [(ngModel)]="operatData.installAddress" required>
+  </mat-form-field>
+  <mat-form-field *ngIf="operatData.operation=='2'">
+    <input type="text" matInput placeholder="设备编号" [value]='operatData.equipmentNo' name='equipmentNo' disabled>
+  </mat-form-field>
+  <mat-form-field *ngIf="operatData.operation=='2'">
+    <mat-select placeholder="关联告警" [(ngModel)]='operatData.alarmIdArr'  multiple>
+      <mat-option *ngFor="let item of alarmIdData" [value]="item.alarmId" >{{item.alarmId}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="工单描述" [(ngModel)]='operatData.orderDescription'
+                matAutosizeMinRows='1' matAutosizeMaxRows='5'>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" class="add-btn" (click)=editWorkOrder(operatData)>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+</mat-dialog-actions>

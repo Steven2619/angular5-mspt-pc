@@ -1,0 +1,28 @@
+<h1 mat-dialog-title >添加管井</h1>
+<mat-dialog-actions>
+  <mat-form-field >
+    <input type="text" matInput placeholder="管井编号"  [(ngModel)]="wellInfo.wellNo" (blur)="searchByWellNo(wellInfo.wellNo)" required>
+  </mat-form-field>
+  <mat-form-field >
+    <input type="text" matInput placeholder="管井名称"  [(ngModel)]="wellInfo.wellAlias" required>
+  </mat-form-field>
+  <mat-form-field >
+    <mat-select placeholder="管井类型" [(ngModel)]='wellInfo.wellType' required>
+      <mat-option *ngFor="let item of mapService.wellTypeData" [value]="item.key" >{{item.val}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field >
+    <input type="text" matInput placeholder="详细地址" [value]='wellInfo.province+wellInfo.city+wellInfo.town+wellInfo.country+wellInfo.address' name='address' disabled>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="描述" [(ngModel)]='wellInfo.remark'
+                matAutosizeMinRows='1' matAutosizeMaxRows='5'>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" class="add-btn" (click)=addWellInfo(wellInfo)>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+</mat-dialog-actions>

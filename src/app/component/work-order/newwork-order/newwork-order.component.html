@@ -1,0 +1,94 @@
+<form [formGroup]="workOrderForm" (ngSubmit)="searchTableList(workOrderForm.value)">
+  <fieldset>
+    <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <mat-select placeholder="工单状态" formControlName="orderStatus">
+        <mat-option  [value]="'-1'">不限</mat-option>
+        <mat-option  [value]="'0'">待执行</mat-option>
+        <mat-option  [value]="'1'">执行中</mat-option>
+        <mat-option  [value]="'2'">已回单</mat-option>
+        <mat-option  [value]="'3'">已归档</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="工单创建人" name="createUser" formControlName="createUser">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker" placeholder="开始时间" (click)="startPicker.open()"  formControlName="startTime"><!--[max]="pageInfo.searchData.endDate"-->
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="endPicker" placeholder="结束时间" (click)="endPicker.open()" formControlName="endTime"><!--[min]="pageInfo.searchData.startDate"-->
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+    <div class="form-group search-div">
+      <button mat-raised-button type="submit">查询</button>
+    </div>
+  </fieldset>
+</form>
+
+<!--表格开始-->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item">工单编号</div>
+      <div class="table-header-item">工单状态</div>
+      <div class="table-header-item">工单描述</div>
+      <div class="table-header-item">安装地址</div>
+      <div class="table-header-item">新装设备数量</div>
+      <div class="table-header-item">工单创建人</div>
+      <div class="table-header-item">创建时间</div>
+      <div class="table-header-item">过期时间</div>
+      <div class="table-header-item">工单操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <div class="table-body-item" matTooltip={{item.orderNo}} matTooltipPosition="above" >{{item.orderNo}}</div>
+      <div class="table-body-item" >
+        <span class='successInfo' *ngIf="item.orderStatus===-1">已删除</span>
+        <span class='warningInfo' *ngIf="item.orderStatus===0">待执行</span>
+        <span class='warningInfo' *ngIf="item.orderStatus===1">执行中</span>
+        <span class='warningInfo' *ngIf="item.orderStatus===2">已回单</span>
+        <span class='info' *ngIf="item.orderStatus===3">已归档</span>
+      </div>
+      <div class="table-body-item"  matTooltip={{item.orderDescription}} matTooltipPosition="above">{{item.orderDescription}}</div>
+      <div class="table-body-item" matTooltip={{item.installAddress}} matTooltipPosition="above">{{item.installAddress}}</div>
+      <div class="table-body-item" matTooltip={{item.newEquipmentCount}} matTooltipPosition="above">{{item.newEquipmentCount}}</div>
+      <div class="table-body-item" >{{item.createUser}}</div>
+      <div class="table-body-item" matTooltip="{{item.createTime| date:'yyyy-MM-dd'}}" matTooltipPosition="above">{{item.createTime| date:'yyyy-MM-dd'}}
+      </div>
+      <div class="table-body-item" matTooltip="{{item.expireTime| date:'yyyy-MM-dd'}}" matTooltipPosition="above">{{item.expireTime| date:'yyyy-MM-dd'}}
+      </div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' *ngIf="item.orderStatus==0&&hasPermission('operationwork-order:update')"
+                (click)="updateInfo(item,'1');$event.stopPropagation()">编辑
+        </button>
+        <button mat-raised-button class='delete-btn' *ngIf="item.orderStatus==0&& hasPermission('operationwork-order:update')"
+                (click)="updateInfo(item,'-1');$event.stopPropagation()">删除
+        </button>
+        <button mat-raised-button class='edit-btn' *ngIf="item.orderStatus!==3&&item.orderStatus!==-1&&hasPermission('operationwork-order:update')"
+                (click)="updateInfo(item,'3');$event.stopPropagation()">归档
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' (click)="addOrderInfo()" *ngIf="hasPermission('operationwork-order:add')">生成新装工单</button>
+  </div>
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span
+        class='currentPage'>{{pageInfo.currentPage+1}}</span>页</span>
+      <mat-chip (click)="goPage(0)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages-1)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  form {
+    min-width: 900px;
+  }
+
+  fieldset {
+    margin: 0;
+  }
+
+  .mat-form-field {
+    width: calc(19% - 15px);
+    margin-left: 15px;
+  }
+  .search-div {
+    width: calc(15% - 15px);
+    height: 56px;
+    line-height: 56px;
+    margin-left: 15px;
+  }
+  .icon-box {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 0 20px;
+    padding-top: 5px;
+    width: 24%;
+    height: 60px;
+  }
+  .classify{
+    display: inline-block;
+    position: relative;
+    width: 55px;
+    text-align: center;
+    img{
+      cursor: pointer;
+    }
+    span.badge {
+      display: flex;
+      flex-flow: row wrap;
+      place-content: center;
+      align-items: center;
+      position: absolute;
+      top: -15px;
+      right: 3px;
+      font-weight: 500;
+      font-size: 12px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: rgb(255, 64, 129);
+      color: rgb(255, 255, 255);
+    }
+  }
+
+  .textClassify{
+    width: 54px;
+    height: 23px;
+    line-height: 23px;
+  }
+  .text-info{
+    color: #8a8a8a;
+    font-weight: bold;
+  }
+  .text-normal{
+    color: #1afa29;
+    font-weight: bold;
+  }
+  .text-maint{
+    color: #f4ea2a;
+    font-weight: bold;
+  }
+  .text-alarm{
+    color: #d81e06;
+    font-weight: bold;
+  }
+}
+
+.search-container {
+  width: 100%;
+  height: 100px;
+  max-height: 100px;
+}
+
+.map-container {
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+.locationBox {
+  position: absolute;
+  top: 115px;
+  left: 20px;
+  width: 300px;
+  height: 200px;
+  color: #fcfffc;
+  background: rgba(64, 155, 202, 0.8);
+  border-radius: 4px;
+  padding: 5px 5px 5px 15px;
+  z-index: 100;
+  .location-head {
+    color: #000000;
+    position: relative;
+    font-size: 19px;
+    span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 20%;
+      font-size: 24px;
+      position: absolute;
+      top: 0;
+      right: 5px;
+      cursor: default;
+      transition-duration: 0.25s;
+    }
+  }
+  .location-content {
+    color: #000000;
+    height: 120px;
+    span {
+      color: #ffffff;
+    }
+  }
+  .location-foot {
+    height: 30px;
+    line-height: 20px;
+    text-align: center;
+    button {
+      display: inline-block;
+      width: 120px;
+      color: #ffffff;
+      &:first-child {
+        background-color: #F9D365;
+      }
+      border-radius: 10px;
+    }
+    button + button {
+      margin-left: 20px;
+    }
+  }
+}
+
+

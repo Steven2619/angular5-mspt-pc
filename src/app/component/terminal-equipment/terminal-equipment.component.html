@@ -1,0 +1,165 @@
+<form action="">
+  <fieldset>
+    <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <input type="text" matInput placeholder="设备编号或名称" name="equipmentNoOrName" [(ngModel)]="terminalEquipment.equipmentNoOrName">
+    </mat-form-field>
+    <!-- <mat-form-field>
+      <input type="text" matInput placeholder="设备名称" name="equipmentAlias" [(ngModel)]="terminalEquipment.equipmentAlias">
+    </mat-form-field> -->
+
+    <mat-form-field>
+      <mat-select placeholder="设备类型" name="equipmentType" [(ngModel)]="terminalEquipment.equipmentType">
+        <mat-option>不限</mat-option>
+        <mat-option *ngFor="let type of tequipmentTypeList" value={{type.dictValue}}>{{type.dictName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+     <mat-form-field>
+      <mat-select placeholder="管理状态" name="adminStatus" [(ngModel)]="terminalEquipment.adminStatus">
+        <mat-option>不限</mat-option>
+        <mat-option value="-1">已拆除</mat-option>
+        <mat-option value="0">未安装</mat-option>
+        <mat-option value="1">已安装</mat-option>
+        <mat-option value="2">正常开启</mat-option>
+        <mat-option value="3">维修</mat-option>
+      </mat-select>
+    </mat-form-field>
+<!--
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker" placeholder="登记时间" (click)="startPicker.open()" name="createTime" [(ngModel)]="terminalEquipment.createTime">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field> -->
+
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="searchTablelist()">查询</button>
+    </div>
+  </fieldset>
+</form>
+
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">
+        <span (click)="orderBy('equipmentNo')">设备编号
+           <span class='sort' [class.desc]="pageInfo.sort['equipmentNo']==='desc'" [class.asc]="pageInfo.sort['equipmentNo']=='asc'" ></span>
+        </span>
+      </div>
+      <div class="table-header-item">
+        <span (click)="orderBy('equipmentAlias')"> 设备名称
+        <span class='sort' [class.desc]="pageInfo.sort['equipmentAlias']==='desc'" [class.asc]="pageInfo.sort['equipmentAlias']=='asc'"></span>
+        </span>
+      </div>
+      <div class="table-header-item">设备类型</div>
+      <div class="table-header-item">管理状态</div>
+      <div class="table-header-item">运行状态</div>
+     <div class="table-header-item">设备版本</div>
+      <!-- <div class="table-header-item">
+        <span (click)="orderBy('createTime')">登记时间
+            <span class='sort' [class.desc]="pageInfo.sort.createTime==='desc'" [class.asc]="pageInfo.sort.createTime=='asc'" ></span>
+        </span>
+      </div> -->
+      <div class="table-header-item">备注 </div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <div class="table-body-item">
+        <input type="checkbox" (click)="onCheckboxItemChanged($event)" value='{{item.equipmentNo}}'>
+      </div>
+      <div class="table-body-item" matTooltip={{item.equipmentNo}} matTooltipPosition="above">{{item.equipmentNo}}</div>
+      <div class="table-body-item" matTooltip={{item.equipmentAlias}} matTooltipPosition="above">{{item.equipmentAlias}}</div>
+      <div class="table-body-item" matTooltip={{item.equipmentTypeName}} matTooltipPosition="above">{{item.equipmentTypeName}}
+      </div>
+      <div class="table-body-item">
+        <span class='warningInfo' *ngIf="item.adminStatus===-1">已拆除</span>
+        <span class='warningInfo' *ngIf="item.adminStatus===0">未安装</span>
+        <span class='successInfo' *ngIf="item.adminStatus===1">已安装</span>
+        <span class='successInfo' *ngIf="item.adminStatus===2">正常开启</span>
+        <span class='info' *ngIf="item.adminStatus===3">维修</span>
+      </div>
+      <div class="table-body-item " id='operStatus'>
+        <span class='successInfo' *ngIf="item.operStatus===0 && item.adminStatus===1">正常</span>
+        <span class='warningInfo' *ngIf="item.operStatus===1 && item.alarmLevel===1 && item.adminStatus===1">
+            清除告警
+        </span>
+        <span class='warningInfo' *ngIf="item.operStatus===1 && item.alarmLevel===4 && item.adminStatus===1">
+            提示告警
+        </span>
+        <span class='warningInfo' *ngIf="item.operStatus===1 && item.alarmLevel===5 && item.adminStatus===1">
+          一般告警
+        </span>
+        <span class='warningInfo' *ngIf="item.operStatus===1 && item.alarmLevel===6 && item.adminStatus===1">
+         重要告警
+        </span>
+        <span class='warningInfo' *ngIf="item.operStatus===1 && item.alarmLevel===7 && item.adminStatus===1">
+            紧急告警
+        </span>
+      </div>
+      <div class="table-body-item">
+        <span class='warningInfo getVersion' matTooltip="点击获取版本" *ngIf="item.versionFlag==2 && item.softwareVersion!=null && hasPermission('equipment-config:update')" (click)="updateEquimentConfig(item.equipmentNo,6)" matTooltipPosition="above" >{{item.softwareVersion}}</span>
+        <span class='info' matTooltip="版本获取中" *ngIf="item.versionFlag==1 && item.softwareVersion!=null  && hasPermission('equipment-config:update')"  matTooltipPosition="above" disabled >{{item.softwareVersion}}</span>
+        <span class='successInfo getVersion' matTooltip="点击获取版本" *ngIf="item.versionFlag==0 && item.softwareVersion!=null  && hasPermission('equipment-config:update')" (click)="updateEquimentConfig(item.equipmentNo,6)"  matTooltipPosition="above"  >{{item.softwareVersion}}</span>
+      </div>
+      <!-- <div class="table-body-item">{{item.createTime| date:'yyyy-MM-dd'}}</div> -->
+      <div class="table-body-item" matTooltip={{item.remark}} matTooltipPosition="above">{{item.remark}}</div>
+      <div class="table-body-item">
+
+        <button mat-raised-button class='detail-btn' (click)="detailInfo(item.equipmentNo,$event)" *ngIf="hasPermission('terminal-equipment:message')">终端消息</button>
+        <button mat-raised-button class='delete-btn' (click)="deleteInfo(item.equipmentNo,$event)" *ngIf="hasPermission('terminal-equipment:delete')">删除</button>
+        <button mat-raised-button class='edit-btn' (click)="editeIndo(item.equipmentNo,$event)" *ngIf="hasPermission('terminal-equipment:update')">编辑</button>
+        <button mat-raised-button class='detail-btn' [matMenuTriggerFor]="menu" overlapTrigger="true">配置终端</button>
+
+        <mat-menu #menu="matMenu" style="width:95px;">
+          <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="equipmentDetail(item.equipmentNo,$event)" *ngIf="hasPermission('equipment-config:query')">终端详情</button>
+          </div>
+          <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="configInfo(item.equipmentNo,$event)" *ngIf="hasPermission('equipment-config:query')">查看配置</button>
+          </div>
+          <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="updateEquimentConfig(item.equipmentNo,0)" *ngIf="hasPermission('equipment-config:update') && item.angleFlag==2">校准角度</button>
+            <button mat-raised-button class='detail-btn'  *ngIf="hasPermission('equipment-config:update') && item.angleFlag==1" disabled >校准中</button>
+            <button mat-raised-button class='detail-btn'  *ngIf="hasPermission('equipment-config:update') && item.angleFlag==0"  (click)="updateEquimentConfig(item.equipmentNo,0)" >校准角度</button>
+          </div>
+          <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="updateEquimentConfig(item.equipmentNo,5)"  *ngIf="hasPermission('equipment-config:update') && item.resetFlag==2">终端重启</button>
+            <button mat-raised-button class='detail-btn'   *ngIf="hasPermission('equipment-config:update') && item.resetFlag==1" disabled>重启中</button>
+            <button mat-raised-button class='detail-btn'   *ngIf="hasPermission('equipment-config:update') && item.resetFlag==0" (click)="updateEquimentConfig(item.equipmentNo,5)" >终端重启</button>
+          </div>
+          <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="searchTablelist()">刷新</button>
+          </div>
+          <!-- <div class="moreOption">
+            <button mat-raised-button class='detail-btn'  (click)="editeIndo(item.equipmentNo)" *ngIf="hasPermission('terminal-equipment:update')">终端版本</button>
+          </div> -->
+        </mat-menu>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' *ngIf="hasPermission('terminal-equipment:add')" (click)="addInfo()">添加</button>
+    <button mat-raised-button class='delete-btn' *ngIf="hasPermission('terminal-equipment:delBatchEquipment')" (click)="deleteSelectedInfo()">删除</button>
+  </div>
+
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage+1}}</span>页</span>
+      <mat-chip (click)="goPage(0)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages-1)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div class="bg-navy" pd15>
+  <div class="flex">
+    <img src="./assets/images/logo.png" alt="">
+    <span class="flex-item"></span>
+    <!-- *ngIf="isLoaded && userinfo" -->
+    <div class="text-white">
+
+      <i class='urgentAlarm alarmBg' [class.blinking]="urgentblinking" (click)="goAlarm(7)">
+          <span class="alarmNumber">{{alarmNum.urgentAlarm}}</span>
+      </i>
+      <i class='promptAlarm alarmBg' [class.blinking]="promptblinking" (click)="goAlarm(6)">
+          <span class="alarmNumber">{{alarmNum.promptAlarm}}</span>
+      </i>
+      <i class='importantAlarm alarmBg' [class.blinking]="importantblinking" (click)="goAlarm(5)">
+          <span class="alarmNumber">{{alarmNum.importantAlarm}}</span>
+      </i>
+      <i class='generalAlarm alarmBg' [class.blinking]="generalblinking" (click)="goAlarm(4)">
+          <span class="alarmNumber">{{alarmNum.generalAlarm}}</span>
+      </i>
+
+      <span class='userInfo' *ngIf="isLoaded && userinfo"><span><i class="fas fa-user"></i>&nbsp;&nbsp;{{userinfo.userName}}</span>
+      <span (click)='updatePassword()' matTooltip="修改密码" matTooltipPosition="above"><i class="fas fa-key"></i></span>
+      <span (click)='loginOut()'  matTooltip="退出" matTooltipPosition="above"> <i class="fas fa-sign-out-alt"></i></span>
+      </span>
+
+      <!-- <mat-menu #menu="matMenu" overlapTrigger="false"  yPosition="above">
+        <button mat-menu-item (click)='updatePassword()'>
+            <i class="fas fa-key"></i>
+            修改密码
+         </button>
+        <button mat-menu-item (click)='loginOut()'>
+            <i class="fas fa-sign-out-alt"></i>
+            退出登录
+        </button>
+
+      </mat-menu> -->
+      <!-- <span name="loginOut" (click)='loginOut()'>
+
+      </span> -->
+      <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>home</mat-icon>
+      </button> -->
+
+      <!-- <button name="loginOut" (click)='loginOut()' mat-raised-button color="primary">退出</button> -->
+    </div>
+  </div>
+</div>

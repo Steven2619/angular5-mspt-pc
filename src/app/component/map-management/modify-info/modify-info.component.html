@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>修改信息</h1>
+<mat-dialog-actions>
+  <mat-form-field *ngIf="modifyData.wellPermCode">
+    <input type="text" matInput placeholder="管井编号" [(ngModel)]="modifyData.wellNo" required>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.wellPermCode">
+    <input type="text" matInput placeholder="管井名称" [(ngModel)]="modifyData.wellAlias" required>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.wellPermCode">
+    <mat-select placeholder="管井类型" [(ngModel)]='modifyData.wellType'>
+      <mat-option *ngFor="let item of mapService.wellTypeData" [value]="item.key">{{item.val}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.equipmentNo!=null&&modifyData.equipmentNo!=''&& modifyData.equipmentPermCode">
+    <input type="text" matInput placeholder="设备编号" [value]='modifyData.equipmentNo' name='equipmentNo' disabled>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.equipmentNo!=null&&modifyData.equipmentNo!=''&& modifyData.equipmentPermCode ">
+    <input type="text" matInput placeholder="设备名称" [(ngModel)]='modifyData.equipmentAlias' name='equipmentAlias'
+           required>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.equipmentNo!=null&&modifyData.equipmentNo!=''&& modifyData.equipmentPermCode">
+    <mat-select placeholder="设备状态" [(ngModel)]='modifyData.adminStatus'>
+      <mat-option *ngFor="let item of mapService.adminStatusData" [value]="item.key">{{item.val}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="modifyData.equipmentNo!=null&&modifyData.equipmentNo!=''&& modifyData.equipmentPermCode ">
+    <mat-select placeholder="设备类型" [(ngModel)]='modifyData.equipmentType'>
+      <mat-option *ngFor="let item of mapService.eqTypeData" [value]="item.key">{{item.val}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="详细地址" [(ngModel)]='modifyData.address' name='address' required>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="描述" [(ngModel)]='modifyData.remark'
+                matAutosizeMinRows='1' matAutosizeMaxRows='5'>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" class="add-btn" (click)=editWellInfo(modifyData)>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+</mat-dialog-actions>

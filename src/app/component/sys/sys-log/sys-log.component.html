@@ -1,0 +1,80 @@
+<form action="" [formGroup]="sysLogFormGroup">
+  <fieldset>
+    <legend value="menuTitle">{{menuTitle}}</legend>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker" placeholder="起始时间" [max]="initPageInfo.searchData['endTime']" (click)="startPicker.open()" formControlName="startTime">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="endPicker" placeholder="结束时间" [min]="initPageInfo.searchData['startTime']" (click)="endPicker.open()" formControlName="endTime">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="操作状态" formControlName="eventStatus">
+        <mat-option>不限</mat-option>
+        <mat-option value="0">成功</mat-option>
+        <mat-option value="1">失败</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="querySysLogInfoList()" >查询</button>
+    </div>
+  </fieldset>
+</form>
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+     <!-- <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>-->
+      <div class="table-header-item">操作人</div>
+      <div class="table-header-item">操作时间</div>
+      <div class="table-header-item">标题</div>
+      <div class="table-header-item">操作类型</div>
+      <div class="table-header-item">操作状态</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <!--<div class="table-body-item">
+        <input type="checkbox" (click)="onCheckboxItemChanged($event)" value={{item.id}}>
+      </div>-->
+      <div class="table-body-item" matTooltip={{item.eventUsername}} matTooltipPosition="above">{{item.eventUsername}}</div>
+
+      <div class="table-body-item" matTooltip="{{item.eventTime | date:'yyyy-MM-dd HH:mm:ss'}}" matTooltipPosition="above">{{item.eventTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+      <div class="table-body-item" matTooltip={{item.eventContent}} matTooltipPosition="above">{{item.eventContent}}</div>
+
+      <div class="table-body-item" >{{item.eventType}}</div>
+      <div class="table-body-item" >
+        <span class='successInfo' *ngIf="item.eventStatus==0">成功</span>
+        <span class='warningInfo' *ngIf="item.eventStatus==1">失败</span>
+      </div>
+
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="showErrorLogDtlInfo(item)" >详情</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tableFoot">
+  <!--<div class="form-group btngroup-div">
+    <button mat-raised-button class='delete-btn' (click)="batchDeleteSysLogInfo()"  *ngIf="permissions.delete">删除</button>
+    <button mat-raised-button class='delete-btn' (click)="deleteSysLogInfoBetweenTime()" *ngIf="permissions.delete">按时间条件删除</button>
+  </div>-->
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage}}</span>页</span>
+      <mat-chip (click)="goPage(1)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

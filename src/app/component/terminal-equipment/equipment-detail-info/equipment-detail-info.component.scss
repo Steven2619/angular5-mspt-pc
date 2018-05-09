@@ -1,0 +1,53 @@
+@import "../../../../variables.scss";
+
+:host {
+  h1 {
+    border-bottom: 4px solid $theme;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+  }
+
+  mat-dialog-actions > mat-form-field {
+    width: calc(50% - 8px);
+  }
+
+  mat-dialog-actions > mat-form-field:nth-child(2n+0) {
+    margin-left: 16px;
+  }
+
+  .form-div {
+    display: flex;
+    flex: 2 2 100%;
+    margin-bottom: 10px;
+  }
+
+  .form-div > label {
+    color: #757575;
+    margin-right: 10px;
+  }
+
+  .form-div .mat-form-field {
+    flex: 2 2 100%;
+  }
+  // .form-div .mat-form-field textarea {
+  //   height: 100px;
+  //   min-height: 60px;
+  //   border: 1px solid #949494;
+  // }
+  .foot {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    justify-content:center;
+  }
+
+
+  .foot button:first-child {
+    flex:  0 1 200px;
+  }
+}

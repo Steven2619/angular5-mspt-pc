@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-actions>
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单编号"[(ngModel)]='data.orderNo'  name='orderNo' disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderType==1">
+    <input type="text" matInput placeholder="工单类型"  name='orderType' value="新装" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderType==2">
+    <input type="text" matInput placeholder="工单类型"  name='orderType' value="告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="关联告警ID" [(ngModel)]='data.alarmId' name='alarmId' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="设备编号" [(ngModel)]='data.equipmentNo' name='equipmentNo' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单创建人员" [(ngModel)]='data.createUser' name='createUser' disabled>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="data.orderStatus==-1">
+    <input type="text" matInput placeholder="工单状态"  name='orderStatus' value="已删除" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderStatus==0">
+    <input type="text" matInput placeholder="工单状态"  name='orderStatus' value="待执行" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderStatus==1">
+    <input type="text" matInput placeholder="工单状态"  name='orderStatus' value="执行中" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderStatus==2">
+    <input type="text" matInput placeholder="工单状态"  name='orderStatus' value="已回单" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.orderStatus==3">
+    <input type="text" matInput placeholder="工单状态"  name='orderStatus' value="已归档" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单创建时间" value="{{data.createTime | date:'yyyy-MM-dd HH:mm:ss'}}" name='createTime' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="工单过期时间" value="{{data.expireTime | date:'yyyy-MM-dd HH:mm:ss'}}" name='expireTime' disabled>
+  </mat-form-field>
+
+  <div class="form-div ">
+    <mat-form-field>
+      <textarea matInput matInput  matTextareaAutosize  matAutosizeMinRows = '2'
+          matAutosizeMaxRows = '5'  placeholder="工单描述" [(ngModel)]='data.orderDescription' name='orderDescription' disabled></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="foot">
+    <button mat-button [mat-dialog-close]="false">关闭</button>
+  </div>
+
+</mat-dialog-actions>

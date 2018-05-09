@@ -1,0 +1,45 @@
+@import "../../../variables";
+
+:host {
+  h1 {
+    border-bottom: 4px solid $theme;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+  }
+
+  mat-dialog-actions > mat-form-field {
+    width: calc(50% - 8px);
+  }
+
+  mat-dialog-actions > mat-form-field:nth-child(2n+0) {
+    margin-left: 16px;
+  }
+
+  .form-div {
+    display: flex;
+    flex: 2 2 100%;
+    margin-bottom: 10px;
+  }
+
+  .form-div > label {
+    color: #757575;
+    margin-right: 10px;
+  }
+
+  .form-div .mat-form-field {
+    flex: 2 2 100%;
+    textarea.mat-input-element{
+      height: 17px;
+    }
+  }
+  .foot {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,79 @@
+<form action="" [formGroup]="sysDictFormGroup">
+  <fieldset>
+        <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <input type="text" matInput placeholder="枚举名称" formControlName="dictName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="枚举状态" formControlName="enable">
+        <mat-option >不限</mat-option>
+        <mat-option value="0">启用</mat-option>
+        <mat-option value="1">禁用</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="枚举类型"  formControlName='dictKey'>
+        <mat-option *ngFor="let item of dictTypeList" [value]="item.dictKey">{{item.dictName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="querySysDictInfoList()" >查询</button>
+    </div>
+  </fieldset>
+</form>
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">ID</div>
+      <div class="table-header-item">枚举编码</div>
+      <div class="table-header-item">枚举名称</div>
+      <div class="table-header-item">枚举值</div>
+      <div class="table-header-item">枚举顺序</div>
+      <div class="table-header-item">状态</div>
+      <div class="table-header-item">描述</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <div class="table-body-item">
+        <input type="checkbox" (click)="onCheckboxItemChanged($event)" value={{item.id}}>
+      </div>
+      <div class="table-body-item" >{{item.id}}</div>
+      <div class="table-body-item" >{{item.dictKey}}</div>
+      <div class="table-body-item">{{item.dictName}}</div>
+      <div class="table-body-item" >{{item.dictValue}}</div>
+      <div class="table-body-item" >{{item.sequence}}</div>
+      <div class="table-body-item" >
+        <span class='successInfo' *ngIf="item.enable==0">启用</span>
+        <span class='warningInfo' *ngIf="item.enable==1">禁用</span>
+      </div>
+      <div class="table-body-item" matTooltip={{item.description}} matTooltipPosition="above">{{item.description}}</div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="editSysDictInfo(item)" *ngIf="hasPermission('sys-dict:update')">编辑</button>
+        <button mat-raised-button class='delete-btn' (click)="deleteSysDictInfo(item)" *ngIf="hasPermission('sys-dict:delete')">删除</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' (click)="addSysDictInfo()" *ngIf="hasPermission('sys-dict:add') ">添加</button>
+    <button mat-raised-button class='delete-btn' (click)="batchDeleteSysDictInfo()" *ngIf="hasPermission('sys-dict:delete')">删除</button>
+  </div>
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage}}</span>页</span>
+      <mat-chip (click)="goPage(1)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

@@ -1,0 +1,62 @@
+<!--搜索容器-->
+<div class="search-container">
+  <form action="">
+    <fieldset>
+      <legend value="menuTitle">{{menuTitle}}</legend>
+      <mat-form-field>
+        <input type="text" matInput placeholder="管井编号" [(ngModel)]="searchData.wellNo" name='wellNo'>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="设备编号" [(ngModel)]="searchData.equipmentNo" name='equipmentNo'>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="详细地址" [(ngModel)]="searchData.address" name='address'>
+      </mat-form-field>
+      <div class="search-div">
+        <button mat-raised-button (click)="searchMapData()">查 询</button>
+      </div>
+      <div class="icon-box">
+        <div class="classify">
+          <img src="assets/images/uninstall-logo.png" alt="未注册" (click)="showClassifyDevice('1');$event.stopPropagation()">
+          <span class="badge">{{unInstallNum}}</span>
+          <div class="textClassify" [ngClass]="{'text-info':isFilterUnInstall}">未注册</div>
+        </div>
+        <div class="classify">
+          <img src="assets/images/normal-logo.png" alt="正常" (click)="showClassifyDevice('2');$event.stopPropagation()">
+          <span class="badge">{{normalNum}}</span>
+          <div class="textClassify" [ngClass]="{'text-normal':isFilterNormal}">正常</div>
+        </div>
+        <div class="classify">
+          <img src="assets/images/maint-logo.png" alt="维护" (click)="showClassifyDevice('3');$event.stopPropagation()">
+          <span class="badge">{{maintNum}}</span>
+          <div class="textClassify" [ngClass]="{'text-maint':isFilterMaint}">维护</div>
+        </div>
+        <div class="classify">
+          <img src="assets/images/alarm-logo.png" alt="异常" (click)="showClassifyDevice('4');$event.stopPropagation()">
+          <span class="badge">{{alarmNum}}</span>
+          <div class="textClassify" [ngClass]="{'text-alarm':isFilterAlarm}">异常</div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<!--地图容器-->
+<div id="map-container" class="map-container">
+</div>
+
+<!--修正位置面板-->
+<div class="locationBox" *ngIf="isPosition">
+  <div class="location-head">
+    修正管井位置 <span (click)="closeLocation()">&times;</span>
+  </div>
+  <div class="location-content">
+    <p>管井编号：<span>{{positionResult?.wellNo}}</span></p>
+    <p>经度：<span>{{positionResult?.longitude}}</span> &nbsp;&nbsp; 纬度：<span>{{positionResult?.latitude}}</span></p>
+    <p>地址：<span>{{positionResult?.province+positionResult?.city+positionResult?.town+positionResult?.country+positionResult?.address}}</span>
+    </p>
+  </div>
+  <div class="location-foot">
+    <button mat-raised-button (click)="locationSubmit(positionResult)">修正完成</button>
+  </div>
+</div>

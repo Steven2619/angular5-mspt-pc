@@ -1,0 +1,71 @@
+@import "../../../../variables.scss";
+:host {
+
+  display: block;
+  h1 {
+    border-bottom: 4px solid $theme;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+
+  //表格样式 and 搜索栏的样式
+  form {
+    min-width: 900px;
+  }
+
+  fieldset {
+    margin: 0;
+  }
+
+  .mat-form-field{
+    // width: calc(24% - 15px);
+    margin-left: 15px;
+  }
+  .table-list {
+    overflow: hidden;
+    width: 100%;
+    min-width: 750px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .table-list .table-body-container .table-body-row,
+  .table-list .table-header-container .table-header-row {
+    display: flex;
+    flex-direction: row;
+    padding: 2px 0;
+    justify-content: center;
+    align-items: center;
+    // border-bottom: 1px solid #ddd;
+  }
+  .table-list .table-body-container {
+    overflow: auto;
+  }
+
+  .table-header-row {
+    height: 30px;
+    line-height: 30px;
+    background: -webkit-gradient(linear, 0% 10%, 0% 100%,from(#466A90), to(#BEC3C7));
+    color: $white;
+  }
+
+  .table-list .table-body-container .table-body-item:last-child,
+  .table-list .table-header-container .table-header-item:last-child {
+    flex: 0 1 100px;
+  }
+  .table-list .table-header-container .table-body-item button{
+      margin-bottom: 10px;
+  }
+  .foot {
+
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    justify-content:center;
+  }
+
+  .foot button:first-child {
+    flex:  0 1 200px;
+  }
+}

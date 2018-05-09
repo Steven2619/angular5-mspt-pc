@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<form class="" [formGroup]="formGroup">
+  <mat-dialog-actions>
+    <mat-form-field>
+      <input type="text" matInput placeholder="设备编号" [(ngModel)]='data.position' formControlName='position'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="姓名" [(ngModel)]='data.name' formControlName='name' required>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="重量" [(ngModel)]='data.weight' formControlName='weight' required>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="符号" [(ngModel)]='data.symbol' formControlName='symbol'>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="设备状态" [(ngModel)]='data.status' formControlName='status'>
+        <mat-option [value]="0">危险</mat-option>
+        <mat-option [value]="1">正常</mat-option>
+        <mat-option [value]="2">警告</mat-option>
+        <mat-option [value]="3">普通</mat-option>
+        <mat-option [value]="4">默认</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Enter your email" formControlName="email" required>
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type='date' placeholder="日期" formControlName='date' >
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type='text' placeholder="时间"   value="{{data.time |date:'yyyy-MM-dd hh:mm:ss'}}" formControlName='time' >
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <div class="form-div">
+      <label>单选框:</label>
+      <mat-radio-group>
+        <mat-radio-button value="1">Option 1</mat-radio-button>
+        <mat-radio-button value="2">Option 2</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="form-div textareaDiv">
+      <mat-form-field>
+        <textarea matInput  matTextareaAutosize  matAutosizeMinRows = '2'
+            matAutosizeMaxRows = '5'  placeholder="多行文本输入"></textarea>
+      </mat-form-field>
+    </div>
+
+
+    <div class="foot">
+      <button mat-button tabindex="-1"  class='add-btn' (click)="onSubmit()">确认</button>
+      <button mat-button [mat-dialog-close]="false">取消</button>
+
+    </div>
+
+  </mat-dialog-actions>
+
+</form>

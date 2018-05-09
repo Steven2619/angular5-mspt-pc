@@ -1,0 +1,24 @@
+
+<h1 mat-dialog-title >生成维修工单</h1>
+<mat-dialog-actions>
+  <mat-form-field>
+    <input type="text" matInput placeholder="关联的告警ID" [(ngModel)]='data.alarmId' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="设备编号" [(ngModel)]='data.equipmentNo' disabled>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="备注" matAutosizeMinRows = '2' matAutosizeMaxRows = '5' [(ngModel)]='data.orderDescription'  name='orderDescription'>
+      </textarea>
+    </mat-form-field>
+  </div>
+
+
+  <div class="foot">
+    <button mat-button  [mat-dialog-close]="true" tabindex="-1" (click)=okSubmit(data)>确认</button>
+    <button mat-button  [mat-dialog-close]="false">取消</button>
+
+  </div>
+
+</mat-dialog-actions>

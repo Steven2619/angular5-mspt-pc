@@ -1,0 +1,337 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "./variables.scss";
+@import "~ztree/css/metroStyle/metroStyle.css";
+
+* {
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: 'Microsoft YaHei';
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+*:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+// 文本颜色设置
+.text-white {
+  color: #ffffff;
+}
+// 内边距设置
+
+[pd15] {
+  padding: 15px;
+}
+
+li,
+ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+mat-form-field .mat-form-field-placeholder {
+  // font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+button.add-btn {
+  background-color: $add;
+  color: $white;
+}
+
+button.delete-btn {
+  background-color: $delete;
+  color: $white;
+}
+
+button.detail-btn {
+  background-color: $detail;
+  color: $white;
+}
+
+button.edit-btn {
+  background-color: $edit;
+  color: $white;
+}
+
+.table-list .table-body-container .table-body-item,
+.table-list .table-header-container .table-header-item {
+  flex: 1 1 0;
+  text-align: left;
+}
+
+.table-list .table-body-container .table-body-item span,
+.table-list .table-header-container .table-header-item:last-child {
+  text-align: center;
+}
+
+.table-list .table-body-container .table-body-item:first-child,
+.table-list .table-header-container .table-header-item:first-child {
+  padding-left: 10px;
+}
+
+.table-list .table-body-container .table-body-item:last-child,
+.table-list .table-header-container .table-header-item:last-child {
+  flex: 2 1 0;
+}
+
+.table-list {
+  max-height: 450px;
+  overflow: auto;
+  width: 100%;
+  min-width: 750px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.table-body-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table-body-item button {
+  flex: 1 1 0;
+  border-radius: 10px;
+  height: 23px;
+  padding: 0;
+  margin-bottom: 2px;
+}
+
+.table-list .table-body-item span.dangerInfo {
+  background-color: $dangerInfo;
+  font-size: 10px;
+}
+
+.table-list .table-body-item span.successInfo {
+  background-color: $successInfo;
+  font-size: 10px;
+}
+
+.table-list .table-body-item span.warningInfo {
+  background-color: $warningInfo;
+  font-size: 10px;
+}
+
+.table-list .table-body-item span.info {
+  background-color: $info;
+  font-size: 10px;
+}
+
+.table-list .table-body-item span.primaryInfo {
+  background-color: $primaryInfo;
+  font-size: 10px;
+}
+
+.table-list .table-header-row .sort {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  color: $white;
+}
+
+.desc {
+  border-top: 5px solid;
+  padding-top: 2px;
+}
+
+.asc {
+  border-bottom: 5px solid;
+  margin-bottom: 2px;
+}
+
+.table-list .table-body-container .table-body-item:first-child input[type='checkbox'],
+.table-list .table-header-container .table-header-item:first-child input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+//表格下方的按钮祖样式 增 删 改
+
+.tableFoot {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  justify-content: space-between;
+}
+
+.btngroup-div {
+  flex: 1 1 0;
+}
+
+.btngroup-div button {
+  width: 150px;
+}
+
+#barcon {
+  flex: 1 1 0;
+  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btngroup-div button {
+  border-radius: 10px;
+}
+//分页条样式
+
+#barcon span.currentPage {
+  display: inline-block;
+  background-color: $currentPage;
+  color: $white;
+  margin: 0 2px;
+  padding-top: 2px;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  text-align: center;
+  vertical-align: baseline;
+}
+
+#barcon mat-chip {
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 6px 12px;
+}
+
+.mat-button,
+.mat-fab,
+.mat-icon-button,
+.mat-mini-fab,
+.mat-raised-button {
+  width: 50px;
+  padding: 0;
+  height: 25px;
+  line-height: 25px !important;
+}
+// 搜索按钮
+
+.search-div {
+  display: inline-block;
+}
+
+.search-div button {
+  width: 150px;
+  color: $white;
+  background-color: $search;
+  border-radius: 10px;
+}
+
+
+ .mat-menu-panel {
+  min-width: 96px !important;
+  width: 96px !important;
+}
+
+ .mat-menu-content {
+  padding: 0 !important;
+  width: 96px !important;
+}
+.moreOption{
+    margin: 5px;
+}
+ .moreOption button{
+    border-radius: 5px;
+}
+
+// 地图自定义信息窗体样式
+.info {
+  border: solid 1px silver;
+  span {
+    margin-left: 5px;
+    font-size: 11px;
+  }
+}
+div.info-top {
+  position: relative;
+  background: none repeat scroll 0 0 #F9F9F9;
+  border-bottom: 1px solid #CCC;
+  border-radius: 5px 5px 0 0;
+}
+div.info-top div {
+  display: inline-block;
+  color: #333333;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 31px;
+  padding: 0 10px;
+}
+div.info-top{
+  img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition-duration: 0.25s;
+    &:hover {
+      box-shadow: 0 0 5px #000;
+    }
+  }
+}
+
+div.info-middle {
+  font-size: 14px;
+  padding: 6px;
+  line-height: 20px;
+  p{
+    margin: 6px 0;
+  }
+}
+div.info-bottom {
+  height: 0;
+  width: 100%;
+  clear: both;
+  text-align: center;
+  img {
+    position: relative;
+    z-index: 104;
+  }
+}
+.map-info{
+  display: inline-block;
+  button{
+    width: 100px;
+    color: $white;
+    background-color: $search;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+}

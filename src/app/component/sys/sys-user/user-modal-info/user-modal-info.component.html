@@ -1,0 +1,104 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-actions>
+  <div *ngFor="let item of data.list">
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="item.checked">{{item.name}}</mat-checkbox>
+    </section>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" (click)="modifyUserRole(data.list)">确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mat-dialog-actions>

@@ -1,0 +1,50 @@
+<h1 mat-dialog-title *ngIf="orderData.orderType=='1'">新装工单</h1>
+
+<mat-dialog-actions>
+  <mat-form-field>
+    <input type="number" matInput placeholder="新装设备数量" [min]="0" [(ngModel)]="orderData.newEquipmentCount" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="新装工单安装地址" [(ngModel)]="orderData.installAddress" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="请输入管井筛选项" value="" [(ngModel)]="wellSearch" (input)="onInput()" (keydown)="onInput()">
+  </mat-form-field>
+
+  <h2 class="resultTitle">
+    请选择安装的管井编号
+  </h2>
+
+  <div class="resultBox">
+    <div *ngFor="let item of wellData " [title]="item.address">
+      <mat-checkbox (change)="onToggle(item)" [checked]="item.checked"></mat-checkbox>
+      &nbsp;{{item.wellNo}}
+      <span *ngIf="item.address">({{item.address}})</span>
+    </div>
+  </div>
+
+  <h2 class="multiple-title">已选<label *ngIf="count" class="countCor">{{count}}</label>项</h2>
+  <div class="multiple-selected">
+    <div class="multiple-selected-item" *ngFor="let item of wellData">
+      <mat-chip *ngIf="item.checked" [selected]="item.checked" class="chip-item" (click)="cancleSelected(item)">
+        <span class="chip-item-label">{{item.wellNo}}</span>
+        <mat-icon class="icon-close"> &times;</mat-icon>
+      </mat-chip>
+    </div>
+  </div>
+
+
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="工单描述" matAutosizeMinRows='2' matAutosizeMaxRows='5'
+                [(ngModel)]='orderData.orderDescription'>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" (click)=okSubmit(orderData) class='add-btn'>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+
+</mat-dialog-actions>

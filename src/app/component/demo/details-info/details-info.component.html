@@ -1,0 +1,137 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item">
+        <span>设备编号</span>
+      </div>
+      <div class="table-header-item">
+        <span>配置状态</span>
+      </div>
+      <div class="table-header-item">门限值</div>
+      <div class="table-header-item">门限值类型</div>
+      <div class="table-header-item">备注</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container">
+    <div *ngFor="let item of data.infoList">
+      <div class="table-body-row" *ngIf="item.isConfig">
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.id' name='id' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <!-- <mat-form-field [(ngModel)]='item.status'>
+            <input type="text" matInput *ngIf="item.status===0" name='status' value="危险" disabled>
+            <input type="text" matInput*ngIf="item.status===1" name='status' value="正常" disabled>
+            <input type="text" matInput *ngIf="item.status===2" name='status' value="警告" disabled>
+            <input type="text" matInput *ngIf="item.status===3" name='status' value="普通" disabled>
+            <input type="text" matInput *ngIf="item.status===4" name='status' value="默认" disabled>
+          </mat-form-field> -->
+          <!-- <mat-form-field *ngIf="item.status===0" >
+            <input type="text" matInput name='status' [(ngModel)]='item.status' hidden disabled>
+            <input type="text" matInput name='status'  value="危险" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.status===1" >
+            <input type="text" matInput name='status' [(ngModel)]='item.status' hidden disabled>
+            <input type="text" matInput name='status'  value="正常" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.status===2" >
+            <input type="text" matInput name='status' [(ngModel)]='item.status' hidden disabled>
+            <input type="text" matInput name='status'  value="警告" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.status===3" >
+            <input type="text" matInput name='status' [(ngModel)]='item.status' hidden disabled>
+            <input type="text" matInput name='status'  value="普通" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.status===4" >
+            <input type="text" matInput name='status' [(ngModel)]='item.status' hidden disabled>
+            <input type="text" matInput name='status'  value="默认" disabled>
+          </mat-form-field> -->
+          <mat-form-field>
+                <mat-select [(ngModel)]='item.status' name='status' disabled>
+                  <mat-option [value]="0">危险</mat-option>
+                  <mat-option [value]="1">正常</mat-option>
+                  <mat-option [value]="2">警告</mat-option>
+                  <mat-option [value]="3">普通</mat-option>
+                  <mat-option [value]="4">默认</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.Threshold' name='Threshold' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <mat-select [(ngModel)]='item.thresholdType' name='thresholdType' disabled>
+              <mat-option [value]="0">危险</mat-option>
+              <mat-option [value]="1">正常</mat-option>
+              <mat-option [value]="2">警告</mat-option>
+              <mat-option [value]="3">普通</mat-option>
+              <mat-option [value]="4">默认</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.remarks' name='remarks' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <button mat-raised-button class='delete-btn' (click)='Configuration(item.id)'>配置</button>
+          <!-- <button mat-raised-button class='edit-btn' *ngIf="!item.isConfig" (click)='updata(item.id)'>提交</button> -->
+        </div>
+      </div>
+      <div class="table-body-row" *ngIf="!item.isConfig">
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.id' name='id' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <mat-select [(ngModel)]='item.status' name='status'>
+              <mat-option [value]="0">危险</mat-option>
+              <mat-option [value]="1">正常</mat-option>
+              <mat-option [value]="2">警告</mat-option>
+              <mat-option [value]="3">普通</mat-option>
+              <mat-option [value]="4">默认</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.Threshold' name='Threshold'>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <mat-select [(ngModel)]='item.thresholdType' name='thresholdType'>
+              <mat-option [value]="0">危险</mat-option>
+              <mat-option [value]="1">正常</mat-option>
+              <mat-option [value]="2">警告</mat-option>
+              <mat-option [value]="3">普通</mat-option>
+              <mat-option [value]="4">默认</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.remarks' name='remarks'>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <!-- <button mat-raised-button class='edit-btn'  (click)='Configuration(item.id)'>配置</button> -->
+          <button mat-raised-button class='add-btn' *ngIf="!item.isConfig" (click)='updata(item.id)'>提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="foot">
+  <button mat-button [mat-dialog-close]="false" class='detail-btn'>关闭</button>
+</div>

@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-actions>
+  <mat-form-field>
+    <input type="text" matInput placeholder="告警编号"[(ngModel)]='data.alarmId'  name='alarmId' disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="告警源" [(ngModel)]='data.alarmSource' name='alarmSource' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="告警类型" [(ngModel)]='data.alarmType' name='alarmType' disabled>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="data.alarmLevel==1">
+    <input type="text" matInput placeholder="告警级别"  name='alarmLevel' value="清除告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.alarmLevel==4">
+    <input type="text" matInput placeholder="告警级别"  name='alarmLevel' value="提示告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.alarmLevel==5">
+    <input type="text" matInput placeholder="告警级别"  name='alarmLevel' value="一般告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.alarmLevel==6">
+    <input type="text" matInput placeholder="告警级别"  name='alarmLevel' value="重要告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.alarmLevel==7">
+    <input type="text" matInput placeholder="告警级别"  name='alarmLevel' value="紧急告警" disabled>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="告警最后发生时间" value="{{data.lastEventTime | date:'yyyy-MM-dd HH:mm:ss'}}"  name='lastEventTime' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="重复告警次数" [(ngModel)]='data.alarmCount' name='alarmCount' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="告警信息" [(ngModel)]='data.alarmInformation' name='alarmInformation' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="额外信息" [(ngModel)]='data.additionalInformation' name='additionalInformation' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="详细信息" [(ngModel)]='data.additionalText' name='additionalText' disabled>
+  </mat-form-field>
+
+  <div class="form-div ">
+    <mat-form-field>
+      <textarea matInput matInput  matTextareaAutosize  matAutosizeMinRows = '2'
+          matAutosizeMaxRows = '5'  placeholder="备注" [(ngModel)]='data.remark' name='remark' ></textarea>
+    </mat-form-field>
+  </div>
+
+
+  <div class="foot">
+    <button mat-button tabindex="-1"  class='add-btn'  (click)="update(data)">确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+
+  </div>
+
+</mat-dialog-actions>

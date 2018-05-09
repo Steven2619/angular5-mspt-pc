@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+ <form class="" [formGroup]="formGroup">
+<mat-dialog-actions>
+  <mat-form-field   *ngIf="data.title==='编辑管井'">
+    <input type="text" matInput placeholder="管井编号" [(ngModel)]='data.wellNo'  (blur)="isExistByWellNo(data.wellNo,data.wellId)"  formControlName='wellNo' required>
+  </mat-form-field>
+  <mat-form-field   *ngIf="data.title==='新增管井'">
+    <input type="text" matInput placeholder="管井编号" [(ngModel)]='data.wellNo' (blur)="queryByWellNo(data.wellNo)" formControlName='wellNo' required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="管井名称" [(ngModel)]='data.wellAlias' formControlName='wellAlias' required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="管井类型" [(ngModel)]='data.wellType' formControlName='wellType' required>
+     <mat-option  *ngFor="let type of data.typeList" [value]="type.dictValue">{{type.dictName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <mat-select placeholder="所属省份" [(ngModel)]='data.province' formControlName='province'>
+         <mat-option *ngFor="let item of data.proList" [value]="item" (click)="changePro(item)">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="所属城市" [(ngModel)]='data.city' formControlName='city'>
+         <mat-option *ngFor="let item of data.cityList" [value]="item" (click)="changeCity(item)">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="所属城镇" [(ngModel)]='data.town' formControlName='town'>
+         <mat-option *ngFor="let item of data.townList" [value]="item" (click)="changeTown(item)">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="所属乡村" [(ngModel)]='data.country' formControlName='country'>
+         <mat-option *ngFor="let item of data.countryList" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  <div class="form-div ">
+  <mat-form-field >
+    <textarea  matInput placeholder="详细地址"[(ngModel)]='data.address'  formControlName='address'></textarea>
+  </mat-form-field>
+</div>
+
+  <div class="form-div ">
+    <mat-form-field>
+      <textarea matInput placeholder="备注" [(ngModel)]='data.remark' formControlName='remark'></textarea>
+    </mat-form-field>
+  </div>
+
+
+  <div class="foot">
+    <button mat-button tabindex="-1" *ngIf="data.title==='编辑管井'"  class='add-btn' (click)="update(data)">确认</button>
+    <button mat-button tabindex="-1" *ngIf="data.title==='新增管井'"  class='add-btn' (click)="save(data)">确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+
+  </div>
+
+</mat-dialog-actions>
+</form>

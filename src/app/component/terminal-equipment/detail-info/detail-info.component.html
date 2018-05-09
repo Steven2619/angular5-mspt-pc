@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+        <div class="table-header-item" *ngFor="let item of tableTitle" >{{item.title}}</div>
+
+
+      <!-- <div class="table-header-item" >电压(V)</div>
+      <div class="table-header-item">倾角(°)</div>
+      <div class="table-header-item">信号质量</div>
+      <div class="table-header-item">心跳周期(S)</div>
+      <div class="table-header-item">温度(℃)</div>
+      <div class="table-header-item">移动标识</div>
+      <div class="table-header-item">源==>目的</div>
+      <div class="table-header-item">目的地</div> -->
+      <div class="table-header-item">上报时间</div>
+
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of data.data">
+        <div class="table-body-item" *ngFor="let td of item['bodyModel']" >{{td['value']}}</div>
+      <!-- <div class="table-body-item" >{{item.statusPayloadModel.voltage}}</div>
+      <div class="table-body-item">{{item.statusPayloadModel.angle}}</div>
+      <div class="table-body-item" >{{item.statusPayloadModel.csq}}</div>
+      <div class="table-body-item" >{{item.statusPayloadModel.next}}</div>
+      <div class="table-body-item" >{{item.statusPayloadModel.temperature}}</div>
+      <div class="table-body-item" >{{item.statusPayloadModel.movement}}</div> -->
+      <div class="table-body-item" matTooltip="{{item.time| date:'yyyy-MM-dd HH:mm:ss' }}" matTooltipPosition="above">{{item.time| date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    </div>
+  </div>
+</div>
+<div class="tableFoot">
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{data.totalRows}}条记录 分{{data.totalPages}}页 当前第<span class='currentPage'>{{data.currentPage+1}}</span>页</span>
+      <mat-chip (click)="goPage(0)">首页</mat-chip>
+      <mat-chip (click)="goPage(data.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(data.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(data.totalPages-1)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>
+<div class="foot">
+  <button mat-button [mat-dialog-close]="false" class='detail-btn'>关闭</button>
+</div>

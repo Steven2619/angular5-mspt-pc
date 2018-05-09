@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<form class="" [formGroup]="logErrorFormGroup">
+  <mat-dialog-actions>
+    <mat-form-field>
+      <input type="text" matInput placeholder="操作人IP"  formControlName='eventRemoteIp' readonly>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="错误码" formControlName='eventErrorCode' readonly>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="详细描述"  rows="15" cols="60" formControlName='eventDescription' readonly></textarea>
+    </mat-form-field>
+    <div class="foot">
+      <button mat-button [mat-dialog-close]="false">确认</button>
+    </div>
+  </mat-dialog-actions>
+</form>
+
+
+
+
+

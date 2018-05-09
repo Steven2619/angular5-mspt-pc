@@ -1,0 +1,62 @@
+@import "../../../variables.scss";
+
+:host {
+  display: block;
+  height: 100%;
+
+  .mat-drawer-container {
+    height: calc(100% - 74px);
+  }
+  //侧边栏菜单
+
+  .mat-drawer {
+    width:200px;
+    padding: 10px 15px;
+    background-color: $theme;
+    box-shadow: -2px 0 10px #ECF0F1;
+  }
+  // 主体样式
+
+  .mat-drawer-content {
+    padding: 5px 10px 5px 10px;
+    position: relative;
+  }
+   .mat-drawer-content>h1{
+       margin-top:20%;
+       text-align: center;
+       font-weight:normal;
+       font-size: 26px;
+   }
+   .bgImg{
+     position: absolute;
+     top:0;
+     bottom:0;
+     right: 0;
+     left: 0;
+     height: 100%;
+     width: 100%;
+   }
+  .btn-sidenav {
+    position: absolute;
+    top: 46%;
+    left: -20px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+    margin-right: 20px;
+    padding: 0;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-right: 20px solid #217FBC;
+  }
+
+  .btn-sidenavshow {
+    left: 0;
+    border: 20px solid transparent;
+    border-left: 20px solid #217FBC;
+  }
+
+  .btn-sidenav:hover {
+    opacity: 1;
+  }
+}

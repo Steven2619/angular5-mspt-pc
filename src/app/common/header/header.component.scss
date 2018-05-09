@@ -1,0 +1,98 @@
+@import '../../../variables.scss';
+
+:host {
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .flex img {
+    height: 40px;
+  }
+
+  .flex-item {
+    flex: 1 1 0;
+  }
+  //顶部菜单栏的颜色
+  .bg-navy {
+    background-color: $theme;
+  }
+
+  .alarmBg {
+    display: inline-block;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: bottom;
+    // background-image: url("../../../assets/images/urgentAlarm.png");
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .blinking {
+    opacity: 0.5;
+  }
+  //紧急 红色
+  .urgentAlarm {
+    background-image: url("../../../assets/images/urgentAlarm.png");
+  }
+  //重要 橘色
+  .promptAlarm {
+    background-image: url("../../../assets/images/promptAlarm.png");
+  }
+  //一般 绿色
+  .importantAlarm {
+    background-image: url("../../../assets/images/importantAlarm.png");
+  }
+  //提示 蓝色
+  .generalAlarm {
+    background-image: url("../../../assets/images/generalAlarm.png");
+  }
+
+  .alarmNumber {
+    display: inline-block;
+    width: 32px;
+    top: 3px;
+    font-size: 14px;
+    font-style: normal;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .userInfo {
+    display: inline-block;
+    min-width: 30px;
+    margin: 0 0 0 20px;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #395574;
+    border-radius: 5px;
+  }
+
+  .userInfo span {
+    margin-right: 10px;
+  }
+
+  .userInfo span > i {
+    margin:5px 10px;
+  }
+
+  .userInfo span > i:hover {
+    margin: 0 7px;
+    font-size: 20px;
+  }
+
+  span[name='loginOut'] {
+    // background-color: #395574;
+    // border-radius: 4px;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    // line-height: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: url("../../../assets/images/loginOut.png");
+    // background: -webkit-gradient(linear, 0% 50%, 0% 100%,from(#395574), to(#7CC6F7));
+  }
+}

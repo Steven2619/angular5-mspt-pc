@@ -1,0 +1,26 @@
+@import "../../../../../variables.scss";
+
+:host {
+  h1 {
+    border-bottom: 4px solid $theme;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+
+  #treeDemo {
+    max-height: 460px;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .foot {
+    margin-top: 10px;
+    float: right;
+  }
+
+  .foot button:first-child {
+    background-color: $commint;
+    color: $white;
+  }
+}

@@ -1,0 +1,104 @@
+<form action="">
+  <fieldset>
+        <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <input type="text" matInput placeholder="管井编号" name="wellNo" [(ngModel)]="terminalWell.wellNo">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="管井名称" name="wellAlias" [(ngModel)]="terminalWell.wellAlias">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="管井类型" name="wellType" [(ngModel)]="terminalWell.wellType">
+        <mat-option >不限</mat-option>
+        <mat-option *ngFor="let type of terminalWellTypes" value={{type.dictVlue}}>{{type.dictName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="安装状态" name="installStatus" [(ngModel)]="terminalWell.installStatus">
+        <mat-option >不限</mat-option>
+        <mat-option value="0">未安装</mat-option>
+        <mat-option value="1">待安装</mat-option>
+        <mat-option value="2">已安装</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="searchTablelist()">查询</button>
+    </div>
+  </fieldset>
+</form>
+
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">
+        <span (click)="orderBy('wellNo')">管井编号
+        <span class='sort' [class.desc]="pageInfo.sort['wellNo']==='desc'" [class.asc]="pageInfo.sort['wellNo']=='asc'" ></span>
+        </span>
+      </div>
+      <div class="table-header-item">
+        <span (click)="orderBy('wellAlias')">管井名称
+         <span class='sort' [class.desc]="pageInfo.sort['wellAlias']==='desc'" [class.asc]="pageInfo.sort['wellAlias']=='asc'" ></span>
+        </span>
+      </div>
+      <div class="table-header-item">管井类型</div>
+      <div class="table-header-item">安装状态</div>
+      <div class="table-header-item">
+          <span (click)="orderBy('createTime')">登记时间
+              <span class='sort' [class.desc]="pageInfo.sort['createTime']==='desc'" [class.asc]="pageInfo.sort['createTime']=='asc'" ></span>
+             </span>
+          </div>
+      <div class="table-header-item">备注 </div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList">
+      <div class="table-body-item">
+        <input type="checkbox" *ngIf="item.installStatus===2" disabled (click)="onCheckboxItemChanged($event)" value='{{item.wellNo}}'>
+        <input type="checkbox" *ngIf="item.installStatus!=2" (click)="onCheckboxItemChanged($event)" value='{{item.wellNo}}'>
+      </div>
+      <div class="table-body-item"  matTooltip={{item.wellNo}} matTooltipPosition="above">{{item.wellNo}}</div>
+      <div class="table-body-item"  matTooltip={{item.wellAlias}} matTooltipPosition="above">{{item.wellAlias}}</div>
+      <div class="table-body-item">
+        <span class='successInfo' *ngIf="item.wellType===0">常规管井</span>
+        <span class='successInfo' *ngIf="item.wellType===1">机械锁管井</span>
+        <span class='successInfo' *ngIf="item.wellType===2">电子管井</span>
+      </div>
+      <div class="table-body-item">
+        <span   class='warningInfo' *ngIf="item.installStatus===0" >未安装</span>
+        <span   class='info'  *ngIf="item.installStatus===1">待安装</span>
+         <span  class='successInfo'  *ngIf="item.installStatus===2"  matTooltip="设备编号:{{item.equipmentNo}}" matTooltipPosition="above">已安装</span>
+      </div>
+      <div class="table-body-item">{{item.createTime| date:'yyyy-MM-dd'}}</div>
+      <div class="table-body-item"  matTooltip={{item.remark}} matTooltipPosition="above" >{{item.remark}}</div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="editeIndo(item.wellId,$event)" >编辑</button>
+        <button mat-raised-button class='delete-btn' (click)="deleteInfo(item.wellId,item.wellNo,$event)" *ngIf="hasPermission('terminal-well:delete') && item.installStatus===0 ">删除</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="tableFoot">
+    <div class="form-group btngroup-div">
+      <button mat-raised-button class='add-btn' (click)="addInfo()"  *ngIf="hasPermission('terminal-well:add')">添加</button>
+      <button mat-raised-button class='delete-btn' (click)="deleteSelectedInfo()"  *ngIf="hasPermission('terminal-well:delBatch')">删除</button>
+    </div>
+
+    <div id="barcon" *ngIf="page">
+      <mat-chip-list>
+        <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage+1}}</span>页</span>
+        <mat-chip (click)="goPage(0)">首页</mat-chip>
+        <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+        <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+        <mat-chip (click)="goPage(pageInfo.totalPages-1)" disabled>尾页</mat-chip>
+      </mat-chip-list>
+    </div>
+
+  </div>

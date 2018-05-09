@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<form class="" [formGroup]="editSysDictFormGroup">
+  <mat-dialog-actions>
+    <mat-form-field>
+      <input type="text" matInput placeholder="枚举编码" formControlName='dictKey'>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="字典分类"  formControlName='type' (change)="typeonchange()">
+        <mat-option [value]= "'0'">字典类型</mat-option>
+        <mat-option [value]= "'1'">字典名目</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="上一级"  formControlName='parentDictKey'>
+        <mat-option *ngFor="let item of dictTypeList" [value]="item.dictKey">{{item.dictName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="枚举名称" formControlName='dictName'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="枚举值" formControlName='dictValue'>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="枚举顺序" formControlName='sequence'>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="状态"  formControlName='enable'>
+        <mat-option [value]="0">启用</mat-option>
+        <mat-option [value]="1">禁用</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="描述" formControlName='description'>
+    </mat-form-field>
+
+    <div class="foot">
+      <button mat-button tabindex="-1" (click)="onsubmit()">确认</button>
+      <button mat-button [mat-dialog-close]="false">取消</button>
+
+    </div>
+
+  </mat-dialog-actions>
+
+</form>
+
+
+
+

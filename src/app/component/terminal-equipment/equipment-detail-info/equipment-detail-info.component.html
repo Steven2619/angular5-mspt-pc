@@ -1,0 +1,114 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-actions>
+  <mat-form-field>
+    <input type="text" matInput placeholder="设备编号"[(ngModel)]='data.equipmentNo'  name='equipmentNo' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="SIM卡号" [(ngModel)]='data.simNo' name='simNo' disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.equipmentType==1">
+    <input type="text" matInput placeholder="设备类型"  name='equipmentType' value="倾角传感器井盖" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.equipmentType==2">
+    <input type="text" matInput placeholder="设备类型"  name='equipmentType' value="烟雾感应" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.equipmentType==3">
+    <input type="text" matInput placeholder="设备类型"  name='equipmentType' value="行程开关井盖" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.adminStatus==-1">
+    <input type="text" matInput placeholder="管理状态"  name='adminStatus' value="已拆除" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.adminStatus==0">
+    <input type="text" matInput placeholder="管理状态"  name='adminStatus' value="未安装" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.adminStatus==1">
+    <input type="text" matInput placeholder="管理状态"  name='adminStatus' value="已安装" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.adminStatus==2">
+    <input type="text" matInput placeholder="管理状态"  name='adminStatus' value="正常开启" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.adminStatus==3">
+    <input type="text" matInput placeholder="管理状态"  name='adminStatus' value="维修" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="所属省市" [(ngModel)]='data.province' name='province' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="所属地市" [(ngModel)]='data.city' name='city' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="所属城镇" [(ngModel)]='data.town' name='town' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="所属乡村" [(ngModel)]='data.country' name='country' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="详细地址" [(ngModel)]='data.address' name='address' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="经度" [(ngModel)]='data.longitude' name='longitude' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="纬度" [(ngModel)]='data.latitud' name='latitud' disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.operStatus==0">
+    <input type="text" matInput placeholder="运行状态"  name='operStatus' value="正常" disabled>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="data.operStatus==1">
+    <input type="text" matInput placeholder="运行状态"  name='operStatus' value="告警" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="登记时间" name='createTime' value="{{data.createTime | date:'yyyy-MM-dd HH:mm:ss'}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="安装时间" name='installationTime' value="{{data.installationTime | date:'yyyy-MM-dd HH:mm:ss'}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="电压(V)" name='voltage'  [(ngModel)]='data.voltage' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="倾角(°)" name='angle'[(ngModel)]='data.angle' name='latitud' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="校准角度(°)" name='configValue' [(ngModel)]='data.configValue' name='configValue' disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="最后上报时间" name='time' value="{{data.time | date:'yyyy-MM-dd HH:mm:ss'}}" disabled>
+  </mat-form-field>
+
+  <div class="form-div ">
+    <mat-form-field>
+      <textarea matInput matInput  matTextareaAutosize  matAutosizeMinRows = '2'
+          matAutosizeMaxRows = '5'  placeholder="备注" [(ngModel)]='data.remark' name='remark' disabled></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="foot">
+    <button mat-button [mat-dialog-close]="false" class='detail-btn'>关闭</button>
+  </div>
+
+</mat-dialog-actions>

@@ -1,0 +1,127 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item">门限值类型</div>
+      <div class="table-header-item">门限值</div>
+      <div class="table-header-item">
+        <span>配置标识</span>
+      </div>
+
+      <div class="table-header-item">备注</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container">
+    <div *ngFor="let item of data.infoList">
+      <div class="table-body-row" *ngIf="item.isConfig">
+
+        <div class="table-body-item">
+          <mat-form-field *ngIf="item.configType===1">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="角度阈值" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===2">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="电压阈值" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===3">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="心跳周期" disabled>
+          </mat-form-field>
+          <!--
+          <mat-form-field *ngIf="item.configType===4" >
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType'  value="IP地址及端口" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===7" >
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType'  value="响应等待时间(500ms)" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===9" >
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType'  value="运动窗口" disabled>
+          </mat-form-field>
+        -->
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.configValue' name='configValue' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field *ngIf="item.configFlag===0">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="已配置" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configFlag===1">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="待配置" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configFlag===2">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="初始状态" disabled>
+          </mat-form-field>
+        </div>
+
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.remark' name='remark' disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <button mat-raised-button class='delete-btn' (click)='Configuration(item.configType)'>配置</button>
+        </div>
+      </div>
+
+      <!--提交配置-->
+      <div class="table-body-row" *ngIf="!item.isConfig">
+        <div class="table-body-item">
+          <mat-form-field *ngIf="item.configType===1">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="角度阈值" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===2">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="电压阈值" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configType===3">
+            <input type="text" matInput name='configType' [(ngModel)]='item.configType' hidden disabled>
+            <input type="text" matInput name='configType' value="心跳周期" disabled>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.configValue' name='configValue'>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <mat-form-field *ngIf="item.configFlag===0">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="已配置" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configFlag===1">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="待配置" disabled>
+          </mat-form-field>
+          <mat-form-field *ngIf="item.configFlag===2">
+            <input type="text" matInput name='configFlag' [(ngModel)]='item.configFlag' hidden disabled>
+            <input type="text" matInput name='configFlag' value="初始状态" disabled>
+          </mat-form-field>
+        </div>
+
+        <div class="table-body-item">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]='item.remark' name='remark'>
+          </mat-form-field>
+        </div>
+        <div class="table-body-item">
+          <button mat-raised-button class='add-btn' *ngIf="!item.isConfig" (click)='updata(item.configType,item.configValue)'>提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="foot">
+  <button mat-button [mat-dialog-close]="false" class='detail-btn'>关闭</button>
+</div>

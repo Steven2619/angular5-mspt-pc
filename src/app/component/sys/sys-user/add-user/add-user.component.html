@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>添加用户</h1>
+<form class="" [formGroup]="formGroup">
+  <mat-dialog-actions>
+    <mat-form-field>
+      <input type="text" matInput placeholder="用户名" formControlName='username'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="邮箱" formControlName='email'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="密码" formControlName='password'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="确认密码" formControlName='password_2'>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="状态"  formControlName='status'>
+        <mat-option [value]="1">启用</mat-option>
+        <mat-option [value]="0">禁用</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="foot">
+      <button mat-button tabindex="-1" (click)="addUserInfo()">确认</button>
+      <button mat-button [mat-dialog-close]="false">取消</button>
+
+    </div>
+
+  </mat-dialog-actions>
+
+</form>

@@ -1,0 +1,74 @@
+<form action="" [formGroup]="userformGroup">
+  <fieldset>
+        <legend value="menuTitle">{{menuTitle}}</legend>
+    <mat-form-field>
+      <input type="text" matInput placeholder="用户名" formControlName='username'>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="用户状态" formControlName='status'>
+        <mat-option>不限</mat-option>
+        <mat-option value="1">启用</mat-option>
+        <mat-option value="0">禁用</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-group search-div">
+      <button mat-raised-button (click)="queryUserInfoList()" >查询</button>
+    </div>
+  </fieldset>
+</form>
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">ID</div>
+      <div class="table-header-item">用户名</div>
+      <div class="table-header-item">邮箱</div>
+      <div class="table-header-item">状态</div>
+      <div class="table-header-item">创建时间</div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of  tableList">
+      <div class="table-body-item">
+        <input type="checkbox" (change)="onCheckboxItemChanged($event)"  value={{item.id}}>
+      </div>
+      <div class="table-body-item">{{item.id}}</div>
+      <div class="table-body-item"  matTooltip={{item.username}} matTooltipPosition="above">{{item.username}}</div>
+      <div class="table-body-item"  matTooltip={{item.email}} matTooltipPosition="above">{{item.email}}</div>
+      <div class="table-body-item" >
+        <span class='successInfo' *ngIf="item.status==1">启用</span>
+        <span class='warningInfo' *ngIf="item.status==0">禁用</span>
+      </div>
+      <div class="table-body-item"   matTooltip="{{item.gmtCreate | date:'yyyy-MM-dd HH:mm:ss'}}" matTooltipPosition="above" >{{item.gmtCreate | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+      <div class="table-body-item">
+        <button mat-raised-button class='edit-btn' (click)="editUserIndo(item)" *ngIf="hasPermission('sys-user:update')">编辑</button>
+        <button mat-raised-button class='delete-btn' (click)="editUserRoleInfo(item)" *ngIf="hasPermission('sys-user:update')">分配角色</button>
+        <button mat-raised-button class='delete-btn' (click)="deleteUserInfo(item)" *ngIf="hasPermission('sys-user:delete')">删除</button>
+        <button mat-raised-button class='delete-btn' (click)="updateUserPassword(item)" *ngIf="hasPermission('sys-user:updatePass')">修改密码</button>
+        <button mat-raised-button class='delete-btn' (click)="resetUserPassword(item)" *ngIf="hasPermission('sys-user:reset')">重置密码</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' (click)="addUserInfo()" *ngIf="hasPermission('sys-user:add')">添加</button>
+    <button mat-raised-button class='delete-btn' (click)="batchDeleteUserInfo()" *ngIf="hasPermission('sys-user:delete')">删除</button>
+  </div>
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage}}</span>页</span>
+      <mat-chip (click)="goPage(1)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

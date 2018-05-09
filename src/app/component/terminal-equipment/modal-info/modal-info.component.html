@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+ <form class="" [formGroup]="formGroup">
+<mat-dialog-actions>
+  <mat-form-field   *ngIf="data.title==='编辑设备'">
+    <input type="text" matInput placeholder="设备编号"[(ngModel)]='data.equipmentNo'  formControlName='equipmentNo'>
+  </mat-form-field>
+  <mat-form-field   *ngIf="data.title==='新增设备'">
+    <input type="text" matInput placeholder="设备编号"[(ngModel)]='data.equipmentNo' (blur)="findById(data.equipmentNo)"  formControlName='equipmentNo' required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="设备名称" [(ngModel)]='data.equipmentAlias' formControlName='equipmentAlias' required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="设备类型" [(ngModel)]='data.equipmentType' formControlName='equipmentType' required>
+     <mat-option  *ngFor="let type of data.typeList" [value]="type.dictValue">{{type.dictName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.title==='新增设备'">
+    <input type="text" matInput placeholder="设备版本" [(ngModel)]='data.softwareVersion' formControlName='softwareVersion' required>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.title!=='新增设备'">
+    <mat-select placeholder="管理状态" [(ngModel)]='data.adminStatus' formControlName='adminStatus'>
+      <mat-option [value]="-1">已拆除</mat-option>
+      <mat-option [value]="0">未安装</mat-option>
+      <mat-option [value]="1">已安装</mat-option>
+      <mat-option [value]="2">正常开启</mat-option>
+      <mat-option [value]="3">维修</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  *ngIf="data.title!=='新增设备' && data.adminStatus=='1'">
+    <mat-select placeholder="运行状态" [(ngModel)]='data.operStatus' formControlName='operStatus'>
+      <mat-option [value]="0">正常</mat-option>
+      <mat-option [value]="1">告警</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.title!=='新增设备' && data.operStatus=='1' && data.adminStatus=='1'">
+    <mat-select placeholder="告警级别" [(ngModel)]='data.alarmLevel' formControlName='alarmLevel'>
+      <mat-option [value]="1">清除告警</mat-option>
+      <mat-option [value]="4">提示告警</mat-option>
+      <mat-option [value]="5">一般告警</mat-option>
+      <mat-option [value]="6">重要告警</mat-option>
+      <mat-option [value]="7">紧急告警</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="备注"  matAutosizeMinRows = '2'
+          matAutosizeMaxRows = '5'  [(ngModel)]='data.remark' formControlName='remark'></textarea>
+    </mat-form-field>
+  </div>
+
+
+  <div class="foot">
+    <button *ngIf="data.title!=='新增设备'" mat-button tabindex="-1"  class='add-btn' (click)="update(data)">确认</button>
+    <button *ngIf="data.title =='新增设备'" mat-button tabindex="-1"  class='add-btn' (click)="save(data)">确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+
+  </div>
+
+</mat-dialog-actions>
+</form>

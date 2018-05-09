@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>维修工单</h1>
+<mat-dialog-actions>
+  <mat-form-field>
+    <mat-select placeholder="设备编号" [(ngModel)]='orderData.equipmentNo' (change)="onEquipmentNoChange(orderData.equipmentNo)">
+      <mat-option *ngFor="let item of equipmentData" [value]="item.equipmentNo">{{item.equipmentNo}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="关联告警" [(ngModel)]='orderData.alarmIdArr' multiple>
+      <mat-option *ngFor="let item of alarmIdData" [value]="item.alarmId">{{item.alarmId}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="form-div textareaDiv">
+    <mat-form-field>
+      <textarea matInput placeholder="工单描述" matAutosizeMinRows='2' matAutosizeMaxRows='5'
+                [(ngModel)]='orderData.orderDescription'>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div class="foot">
+    <button mat-button tabindex="-1" (click)=okSubmit(orderData) class='add-btn'>确认</button>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+  </div>
+</mat-dialog-actions>

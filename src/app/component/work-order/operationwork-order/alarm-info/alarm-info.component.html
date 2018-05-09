@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>告警信息</h1>
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item">编号</div>
+      <div class="table-header-item">类型</div>
+      <div class="table-header-item">级别</div>
+      <div class="table-header-item">发生时间</div>
+      <div class="table-header-item">次数</div>
+      <div class="table-header-item">工单编号</div>
+      <div class="table-header-item">确认状态</div>
+      <div class="table-header-item">清除状态</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of data.data">
+      <div class="table-body-item">{{item.alarmId}}</div>
+      <div class="table-body-item">{{item.alarmType}}</div>
+      <div class="table-body-item">
+        <span *ngIf="item.alarmLevel===null"></span>
+        <span class='warningInfo' *ngIf="item.alarmLevel===1">清除告警</span>
+        <span class='info' *ngIf="item.alarmLevel===4">提示告警</span>
+        <span class='successInfo' *ngIf="item.alarmLevel===5">一般告警</span>
+        <span class='warningInfo' *ngIf="item.alarmLevel===6">重要告警</span>
+        <span class='dangerInfo' *ngIf="item.alarmLevel===7">紧急告警</span>
+      </div>
+
+      <div class="table-body-item" matTooltip="{{item.lastEventTime| date:'yyyy-MM-dd HH:mm:ss'}}" matTooltipPosition="above">{{item.lastEventTime| date:'yyyy-MM-dd HH:mm:ss'}}</div>
+      <div class="table-body-item">{{item.alarmCount}}</div>
+      <div class="table-body-item">{{item.orderNo}}</div>
+      <div class="table-body-item">
+        <span class='warningInfo' *ngIf="item.ackFlag===0 || item.ackFlag===null">未确认</span>
+        <span class='successInfo' *ngIf="item.ackFlag===1">已确认</span>
+      </div>
+      <div class="table-body-item">
+        <span class='warningInfo' *ngIf="item.clearFlag===0 || item.clearFlag===null">未清除</span>
+        <span class='successInfo' *ngIf="item.clearFlag===1">已清除</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tableFoot">
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{data.totalRows}}条记录 分{{data.totalPages}}页 当前第<span class='currentPage'>{{data.currentPage+1}}</span>页</span>
+      <mat-chip (click)="goPage(0)">首页</mat-chip>
+      <mat-chip (click)="goPage(data.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(data.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(data.totalPages-1)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>
+<div class="foot">
+  <button mat-button [mat-dialog-close]="false" class='detail-btn'>关闭</button>
+</div>

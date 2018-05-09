@@ -1,0 +1,53 @@
+@import '../../../variables.scss';
+
+:host {
+  display: block;
+
+  .menuList {
+    color: $white;
+  }
+
+  .menuList > li {
+    // border-top: 1px solid $white;
+    position: relative;
+  }
+
+  .menuList > li > span.menuTitle {
+    display: block;
+    color: #fff;
+    background-color: #395574;
+    padding: 6px;
+    // border-radius: 5px;
+    box-shadow: 0 0 5px #6984A0;
+  }
+
+  li > ul > li {
+    padding: 6px 0 6px 25px;
+    position: relative;
+    // border-radius: 6px;
+  }
+
+  .menuList li > ul > li.active {
+    background-color: #466A90;
+    color: #fff;
+  }
+
+  li > ul > li:hover {
+    background-color: #395574;
+    color: #fff;
+  }
+
+  span.menuActive {
+    position: absolute;
+    width: 5px;
+    height: 30px;
+    top: 0;
+    right: -5px;
+  }
+
+  span.active {
+    background-color: $active;
+    // border: 22px solid #5BABE6;
+    //  border-left-color: $white;
+  }
+}

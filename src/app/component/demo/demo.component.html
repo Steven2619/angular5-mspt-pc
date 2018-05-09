@@ -1,0 +1,134 @@
+<!-- <button type="button" name="button" (click)="showBox()">弹出普通模态框showBox()</button>
+<button type="button" name="button" (click)="showDelBox()">弹出删除模态框showDelBox()</button> -->
+<form action="">
+  <fieldset>
+    <legend value="menuTitle">{{menuTitle}}</legend>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker"  placeholder="开始时间" (click)="startPicker.open()" name="startdate" [max]="pageInfo.searchData.endDate" [(ngModel)]="pageInfo.searchData.startDate" readonly>
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="endPicker" placeholder="结束时间" (click)="endPicker.open()" name="enddate" [min]="pageInfo.searchData.startDate" [(ngModel)]="pageInfo.searchData.endDate">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="所属省份" [(ngModel)]="pageInfo.searchData.province" name='province' (change)="changePro()">
+        <mat-option>不限</mat-option>
+        <mat-option *ngFor="let item of address.province" value={{item}}>{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="所属市区" [(ngModel)]="pageInfo.searchData.city" name='city' [disabled]="pageInfo.searchData.province==='' || pageInfo.searchData.province===undefined" multiple>
+        <mat-option>不限</mat-option>
+        <mat-option *ngFor="let item of address.city" value={{item}}>{{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="设备编号" [(ngModel)]="pageInfo.searchData.position" name='position'>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="datetime-local" matInput placeholder="时间" [(ngModel)]="pageInfo.searchData.datetime" name='datetime'>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="设备地址" >
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of allAddress" [label]="group.province" value="group.province">
+          <mat-option value="group.province">{{group.province}}</mat-option>
+          <!-- <mat-option *ngFor="let pokemon of group.city" [value]="pokemon">
+            {{ pokemon.city }}
+          </mat-option> -->
+          <!-- <mat-optgroup *ngFor="let city of group.city" [label]="group.province" value="group.province">
+            <mat-option value="city.city">{{city.city}}</mat-option>
+            <mat-option *ngFor="let pokemon of city.county" [value]="pokemon">
+              {{ pokemon }}
+            </mat-option>
+          </mat-optgroup> -->
+        </mat-optgroup>
+      </mat-select>
+
+
+
+    </mat-form-field>
+    <div class="search-div">
+      <button mat-raised-button (click)="searchTablelist()">查询</button>
+    </div>
+  </fieldset>
+</form>
+
+<!-- 表格开始 -->
+<div class="table-list">
+  <div class="table-header-container">
+    <div class="table-header-row">
+      <div class="table-header-item" id="fristitem">
+        <input type="checkbox" (change)="onCheckboxAllChanged()" #checkAll>
+      </div>
+      <div class="table-header-item">
+        <span >编号
+          <!-- <span class='sort' [class.desc]="pageInfo.sort.position==='desc'" [class.asc]="pageInfo.sort.position=='asc'" ></span> -->
+          <span class='sort' ></span>
+        </span>
+      </div>
+      <div class="table-header-item">
+        <span >姓名
+          <span class='sort'></span>
+
+        </span>
+      </div>
+      <div class="table-header-item">重量</div>
+      <div class="table-header-item">符号</div>
+      <div class="table-header-item">状态</div>
+      <div class="table-header-item">
+        <span >时间
+         <span class='sort'></span>
+        </span>
+      </div>
+      <div class="table-header-item">操作</div>
+    </div>
+  </div>
+  <div class="table-body-container" #tableBody>
+    <div class="table-body-row" *ngFor="let item of tableList" (click)="rowEvent(item.position, $event)">
+      <div class="table-body-item">
+        <!-- <mat-checkbox >&nbsp;</mat-checkbox> -->
+        <input type="checkbox" (click)="onCheckboxItemChanged($event)" value={{item.position}}>
+      </div>
+      <div class="table-body-item">{{item.position}}</div>
+      <div class="table-body-item" matTooltip={{item.name}}>{{item.name}}</div>
+      <div class="table-body-item">{{item.weight}}</div>
+      <div class="table-body-item">{{item.symbol}}</div>
+      <div class="table-body-item">
+        <span class='dangerInfo' *ngIf="item.status===0">危险</span>
+        <span class='successInfo' *ngIf="item.status===1">正常</span>
+        <span class='warningInfo' *ngIf="item.status===2">警告</span>
+        <span class='info' *ngIf="item.status===3">普通</span>
+        <span class='primaryInfo' *ngIf="item.status===4">默认</span>
+      </div>
+      <div class="table-body-item">{{item.time | date:'yyyy-MM-dd'}}</div>
+      <div class="table-body-item">
+        <!-- <button mat-raised-button class='add-btn' (click)="addInfo()">添加</button> -->
+        <button mat-raised-button class='delete-btn' (click)="deleteInfo(item.position,$event)" *ngIf="hasPermission('demo:delete')">删除</button>
+        <button mat-raised-button class='edit-btn' (click)="editeInfo(item.position,$event)" *ngIf="hasPermission('demo:update')">编辑</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tableFoot">
+  <div class="form-group btngroup-div">
+    <button mat-raised-button class='add-btn' (click)="addInfo()" *ngIf="hasPermission('demo:add')">添加</button>
+    <button mat-raised-button class='delete-btn' (click)="deleteSelectedInfo()" *ngIf="hasPermission('demo:delete')">删除</button>
+    <button mat-raised-button class='detail-btn' (click)="detailInfo()" *ngIf="hasPermission('demo:update')">详情</button>
+  </div>
+  <div id="barcon" *ngIf="page">
+    <mat-chip-list>
+      <span>共{{pageInfo.totalRows}}条记录 分{{pageInfo.totalPages}}页 当前第<span class='currentPage'>{{pageInfo.currentPage}}</span>页</span>
+      <mat-chip (click)="goPage(1)">首页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage-1)">&lt;上一页</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.currentPage+1)">下一页&gt;</mat-chip>
+      <mat-chip (click)="goPage(pageInfo.totalPages)" disabled>尾页</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</div>

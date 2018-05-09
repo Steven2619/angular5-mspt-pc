@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<form class="" [formGroup]="editRoleFormGroup">
+  <mat-dialog-actions>
+    <mat-form-field>
+      <input type="text" matInput placeholder="角色名" formControlName='name'>
+    </mat-form-field>
+    <!--<mat-form-field>
+      <input type="text" matInput placeholder="排序" formControlName='sort'>
+    </mat-form-field>-->
+    <mat-form-field>
+      <input type="text" matInput placeholder="描述" formControlName='description'>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="状态"  formControlName='status'>
+        <mat-option [value]="1">启用</mat-option>
+        <mat-option [value]="0">关闭</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="foot">
+      <button mat-button tabindex="-1" (click)="onsubmit()">确认</button>
+      <button mat-button [mat-dialog-close]="false">取消</button>
+
+    </div>
+
+  </mat-dialog-actions>
+
+</form>
+
+
