@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 此项目使用版本为1.5.0的[Angular CLI](https://github.com/angular/angular-cli)进行创建。
 
-##1.进入项目目录并下载依赖包
+## 1.进入项目目录并下载依赖包
 ```
 cd angular5-mspt-pc && npm install
 ```
